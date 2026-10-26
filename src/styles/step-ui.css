@@ -1,0 +1,117 @@
+/**
+ * STEP 6 시안 기반 — 실습 단계 공통 UI
+ */
+:root {
+  --step-ink: #252638;
+  --step-muted: #858999;
+  --step-lede: #6c7181;
+  --step-border: #e0e3ed;
+  --step-accent: #6556e2;
+  --step-accent-soft: #f0eeff;
+  --step-progress: #c9c3ff;
+  --step-progress-current: #6959e3;
+  --step-eyebrow: #7063dc;
+  --step-ok: #31795d;
+  --step-ok-bg: #e6f5eb;
+  --step-shell-bg: #f5f6f9;
+  --step-toolbar-bg: #202239;
+  --step-wrap: 940px;
+  --step-card-radius: 15px;
+  --step-card-shadow: 0 7px 20px #27324809;
+}
+
+.app-work-shell {
+  min-height: 100dvh;
+  background: var(--step-shell-bg);
+  color: var(--step-ink);
+}
+
+.app-work-wrap {
+  max-width: var(--step-wrap);
+  margin: 0 auto;
+  padding: 0 20px calc(var(--footer-h) + 32px);
+}
+
+.step-hero {
+  padding-top: 28px;
+  margin-bottom: 8px;
+}
+
+.step-hero-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.step-hero-eyebrow {
+  color: var(--step-eyebrow);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.step-hero-pill {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--step-ok);
+  background: var(--step-ok-bg);
+  padding: 7px 10px;
+  border-radius: 30px;
+  white-space: nowrap;
+}
+
+.step-hero-progress {
+  display: flex;
+  gap: 5px;
+  margin-top: 16px;
+}
+
+.step-hero-progress span {
+  height: 5px;
+  flex: 1;
+  background: var(--step-progress);
+  border-radius: 10px;
+}
+
+.step-hero-progress span.current {
+  background: var(--step-progress-current);
+}
+
+.step-hero-title {
+  font-size: clamp(1.55rem, 4vw, 1.875rem);
+  letter-spacing: -0.055em;
+  margin: 19px 0 8px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--step-ink);
+}
+
+.step-hero-lede {
+  color: var(--step-lede);
+  margin: 0 0 28px;
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.step-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px 0 12px;
+  gap: 12px;
+}
+
+.step-section-head h2 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--step-ink);
+}
+
+.step-section-muted {
+  color: var(--step-muted);
+  font-size: 12px;
+}

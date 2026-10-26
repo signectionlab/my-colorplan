@@ -1,0 +1,265 @@
+@import './tokens.css';
+@import './step-ui.css';
+
+* { box-sizing: border-box; }
+
+html { font-size: 16px; }
+
+body {
+  margin: 0;
+  color: var(--step-ink, var(--ink));
+  background: var(--canvas);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  font-feature-settings: "ss01";
+}
+
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: var(--step-ink, var(--ink));
+}
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: 1.125rem; font-weight: 800; }
+h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
+
+#app { min-height: 100dvh; }
+.app-main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+.lede { margin: 8px 0 28px; color: var(--step-lede, var(--ink-mute)); font-size: 14px; line-height: 1.7; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-weight: 700;
+  font-size: 13px;
+}
+.btn-primary {
+  background: var(--step-accent, var(--primary));
+  color: #fff;
+  border-color: var(--step-accent, var(--primary));
+}
+.btn-primary:hover { filter: brightness(0.94); }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-secondary {
+  background: #fff;
+  color: var(--step-accent, var(--primary));
+  border-color: var(--step-border, var(--hairline));
+}
+.btn-ghost { color: var(--step-muted, var(--ink-mute)); border-color: transparent; font-weight: 600; }
+
+.card {
+  background: #fff;
+  border: 1px solid var(--step-border, var(--hairline));
+  border-radius: var(--step-card-radius, var(--radius-lg));
+  box-shadow: var(--step-card-shadow, var(--shadow));
+  padding: 24px;
+}
+.caption {
+  color: var(--step-lede, var(--ink-mute));
+  font-size: 14px;
+  line-height: 1.45;
+}
+/** 안내·동작 힌트 — step-badge--nav 와 같은 보라 강조 */
+.caption-guide {
+  color: var(--step-accent, var(--primary));
+  font-weight: 600;
+}
+.caption-guide strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+/** 실습 화면 — STEP·활동 라벨 (BrandImagePicker, LearnScreen, CompareScreen 등) */
+.step-badge {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #f7f7fa;
+  border: 1px solid var(--step-border, var(--hairline));
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  color: var(--step-muted, var(--ink-mute));
+}
+.step-badge--nav {
+  margin-bottom: 12px;
+  color: var(--step-accent, var(--primary));
+  background: var(--step-accent-soft);
+  border-color: color-mix(in srgb, var(--step-accent, var(--primary)) 28%, var(--step-border));
+}
+/** 활동 주제(가독성·주변색 효과 등) — step-badge 바로 아래 */
+.step-badge--topic {
+  margin: 0 0 8px;
+  color: var(--step-accent, var(--primary));
+  background: var(--step-accent-soft);
+  border-color: color-mix(in srgb, var(--step-accent, var(--primary)) 26%, var(--step-border));
+}
+.step-badge--topic-alt {
+  color: #1e4d7a;
+  background: color-mix(in srgb, #1e4d7a 8%, #f7f7fa);
+  border-color: color-mix(in srgb, #1e4d7a 22%, var(--step-border));
+}
+/** LearnScreen · CompareScreen 활동 제목 */
+.activity-title {
+  margin: 0 0 12px;
+  font-size: clamp(1.2rem, 4vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--step-ink, var(--ink));
+}
+.screen-lede {
+  margin: 0 0 12px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--ink);
+}
+/** 실습 화면 — 활동 카드 (LearnScreen activity 2, CompareScreen 등) */
+.activity.card {
+  margin-bottom: 16px;
+  padding: 18px 20px 20px;
+}
+.activity.card :global(.caption) {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.activity-lede {
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ink-mute);
+}
+.activity-lede strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+.activity-head-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.activity-head-row .activity-title {
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 0;
+}
+.screen-context {
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.field { display: grid; gap: 8px; margin-bottom: 16px; }
+.field span, .label { font-size: 14px; font-weight: 600; }
+.field input, .field textarea, .text-input {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--step-border, var(--hairline-input));
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.field textarea {
+  min-height: 1.875rem;
+  max-height: 4.5rem;
+  resize: vertical;
+}
+.field input, .text-input {
+  min-height: 34px;
+}
+.field input:focus, .field textarea:focus, .text-input:focus {
+  outline: 2px solid color-mix(in srgb, var(--step-accent, var(--primary)) 28%, transparent);
+  border-color: var(--step-accent, var(--primary));
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1px solid var(--hairline);
+  background: #fff;
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+}
+.chip.active {
+  background: var(--step-accent-soft);
+  color: var(--step-accent, var(--primary));
+  border-color: color-mix(in srgb, var(--step-accent, var(--primary)) 35%, transparent);
+  font-weight: 700;
+}
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.tabular { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+.app-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  min-height: var(--footer-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(32, 34, 57, 0.96);
+  border-top: 1px solid #363950;
+  backdrop-filter: blur(8px);
+}
+.app-footer .btn-ghost {
+  color: #c5c8d8;
+}
+.app-footer .btn-secondary {
+  background: #363950;
+  color: #fff;
+  border-color: #50546f;
+}
+.app-footer .btn-primary {
+  background: var(--step-accent);
+  border-color: var(--step-accent);
+}
+.live {
+  background: var(--canvas-cream);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-top: 12px;
+}
+
+/**
+ * 컬러 칩 hairline (공통) — design.md § 컬러 칩 hairline
+ * HEX가 needsPickSwatchHairline(hex)이면 class="color-chip" + class:light
+ */
+.color-chip.light {
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+.color-chip.color-chip--hairline-border.light {
+  border: 1px solid var(--hairline);
+  box-shadow: none;
+}
+.color-chip.light.current {
+  box-shadow:
+    inset 0 0 0 1px var(--hairline),
+    0 0 0 1px rgba(83, 58, 253, 0.35);
+}

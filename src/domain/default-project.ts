@@ -1,0 +1,73 @@
+import type { Project } from '../types/project'
+import { COMPARE_SURROUND_BG_DEFAULT } from './compare-ux'
+
+export function createDefaultProject(): Project {
+  return {
+    kind: 'my-brand-color-canvas',
+    version: 2,
+    screen: 'start',
+    brand: {
+      name: '',
+      field: '',
+      applyFieldId: null,
+      applyFieldCustom: '',
+      intro: '',
+      keywords: [],
+      imagePicks: [],
+      imagePickSlotCount: 3,
+      imagePickAddingDone: false,
+      accentPlanPickKeys: [null, null, null],
+      keywordReason: '',
+    },
+    learn: { interestIds: [], reasons: {}, focusPickKey: null, brandPickRecords: {} },
+    compare: {
+      background: '#f6f9fc',
+      text: '#0d253d',
+      shape: '#533afd',
+      observation: '',
+      baseline: null,
+      readabilityChoice: null,
+      surroundChoice: null,
+      brandExperimentChoice: null,
+      observationDetail: '',
+      surroundBgA: COMPARE_SURROUND_BG_DEFAULT.a,
+      surroundBgB: COMPARE_SURROUND_BG_DEFAULT.b,
+      surroundShape: '#533afd',
+    },
+    palette: {
+      colors: [
+        { id: 'slot-1', name: '하양', hex: '#f4f4f2', reason: '', usage: '' },
+        { id: 'slot-2', name: '남색', hex: '#1b3a6b', reason: '', usage: '' },
+        { id: 'slot-3', name: '주황', hex: '#f4781f', reason: '', usage: '' },
+      ],
+      ratios: [60, 30, 10],
+      roles: ['주조색', '보조색', '강조색'],
+      roleNote: '',
+      baseline: null,
+      comboReasonChoice: null,
+      comboReason: '',
+    },
+    review: {
+      imageFit: '',
+      brandImageFeel: null,
+      keyColorRowId: null,
+      primaryRoleQuiz: null,
+      usageSelections: {},
+      usageReasonChoice: null,
+      usageReasonCustom: '',
+      contrastNote: '',
+      ratioNote: '',
+      changeNote: '',
+    },
+    plan: {
+      text: '',
+      edited: false,
+      sourceSignature: '',
+      decision: null,
+      memo: '',
+      sectionEdits: {},
+      fieldEdits: {},
+      acknowledgedFactSignature: '',
+    },
+  }
+}
