@@ -64,7 +64,7 @@
 
 </script>
 
-<p class="screen-lede">1단계에서 고른 색으로 글자·배경 대비를 살펴봅니다. (아직 팔레트를 확정하는 단계예요.)</p>
+<p class="screen-lede">1단계에서 고른 색으로 글자·배경 대비를 살펴봅니다.</p>
 <p class="caption caption-guide compare-note">{CONTRAST_NOTE} 팔레트(4단계)와 별도로 저장됩니다.</p>
 
 <section class="activity card" aria-labelledby="compare-act1">
@@ -160,7 +160,7 @@
 
     <details class="act-details" open>
       <summary>나란히 비교 · 관찰 기록</summary>
-      <p class="caption caption-guide compare-baseline-help">{compareAct1BaselineHelp(!!compare.baseline)}</p>
+      <span class="caption caption-guide compare-baseline-help">{compareAct1BaselineHelp(!!compare.baseline)}</span>
       <div class="baseline-compare">
         <div class="baseline-mini">
           <p class="baseline-label">지금 미리보기</p>
@@ -576,6 +576,7 @@
     opacity: 0.85;
   }
   .compare-baseline-help {
+    display: block;
     margin: 10px 0 0;
     line-height: 1.5;
   }

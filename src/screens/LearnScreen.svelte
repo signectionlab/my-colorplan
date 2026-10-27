@@ -11,7 +11,6 @@
     compareMineSideView,
     compareOtherSideView,
     compareToneOptionsForPick,
-    IMAGE_COMPARE_PERCEPTION_NOTE,
     needsPickSwatchHairline,
     resolveCompareToneId,
     neighborToneSwatches,
@@ -574,7 +573,6 @@
             {#if act2Record.imageCompareSide === 'other'}<span class="pick-badge">✓ 선택</span>{/if}
     </button>
         </div>
-        <p class="caption caption-guide act2-perception">{IMAGE_COMPARE_PERCEPTION_NOTE}</p>
         <fieldset class="act2-choice">
           <legend class="act2-choice-legend">어느 색이 내 브랜드가 전하고 싶은 이미지와 더 가까운가요?</legend>
           <div class="act2-choice-options" role="radiogroup" aria-label="브랜드 이미지에 더 가까운 색">
@@ -1389,9 +1387,6 @@
   }
   .act2-unavailable {
     margin-top: 12px;
-  }
-  .act2-perception {
-    margin-top: 10px;
   }
   .act2-choice {
     margin: 14px 0 0;

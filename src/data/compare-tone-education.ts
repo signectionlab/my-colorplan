@@ -2,9 +2,6 @@
  * STEP 2 활동 2 — 비교 톤 교육용 참고 표현 (color-data.md §3·§4 톤 분류 참고, educational-proposal)
  */
 
-export const IMAGE_COMPARE_PERCEPTION_NOTE =
-  '색에서 느껴는 이미지는 사람마다 다를 수 있어요.'
-
 /** 톤별 1~2개 짧은 이미지 참고 표현 (심리 효과 단정 아님) */
 export const COMPARE_TONE_IMAGE_HINTS: Record<string, readonly [string, string]> = {
   v: ['또렷한', '강렬한'],

@@ -1,9 +1,5 @@
 import { colorsForTab } from '../data/colors'
-import {
-  COMPARE_TONE_IMAGE_HINTS,
-  IMAGE_COMPARE_PERCEPTION_NOTE,
-  NEUTRAL_COMPARE_STEP_HINTS,
-} from '../data/compare-tone-education'
+import { COMPARE_TONE_IMAGE_HINTS, NEUTRAL_COMPARE_STEP_HINTS } from '../data/compare-tone-education'
 import { imageAdjectivesForPick } from '../data/color-education-data'
 import type { BrandImagePick, LearnBrandPickRecord } from '../types/project'
 import {
@@ -196,8 +192,6 @@ export function compareOtherSideView(
     imageHintLine: hintLine,
   }
 }
-
-export { IMAGE_COMPARE_PERCEPTION_NOTE }
 
 function mixWithWhite(hex: string, ratio: number): string {
   const n = parseInt(hex.slice(1), 16)
