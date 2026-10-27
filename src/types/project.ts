@@ -235,7 +235,7 @@ export const STEP_META: { id: StepId; title: string; lede: string; nextLabel: st
   {
     id: 'brand',
     title: '어디에 사용할 색인가요?',
-    lede: '만들고 싶은 브랜드나 상품, 꾸미고 싶은 공강 등 색을 활용할 대상을 생각해보세요.',
+    lede: '만들고 싶은 브랜드나 상품, 꾸미고 싶은 공간 등 색을 활용할 대상을 생각해보세요.',
     nextLabel: '내 색 이해하기',
   },
   {
@@ -247,7 +247,7 @@ export const STEP_META: { id: StepId; title: string; lede: string; nextLabel: st
   {
     id: 'compare',
     title: '색 비교하기',
-    lede: '1단계에서 고른 색으로 글자·배경과 주변색 효과를 살펴봅니다. 실습 색은 4단계 팔레트와 따로 둡니다.',
+    lede: '1단계에서 고른 색으로 글자·배경 대비를 살펴봅니다.',
     nextLabel: '내 팔레트 만들기',
   },
   {

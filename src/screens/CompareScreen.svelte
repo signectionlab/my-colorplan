@@ -64,7 +64,6 @@
 
 </script>
 
-<p class="screen-lede">1단계에서 고른 색으로 글자·배경 대비를 살펴봅니다.</p>
 <p class="caption caption-guide compare-note">{CONTRAST_NOTE} 팔레트(4단계)와 별도로 저장됩니다.</p>
 
 <section class="activity card" aria-labelledby="compare-act1">
