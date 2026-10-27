@@ -1,19 +1,11 @@
-# color-plan (컬러플랜)
+# My Color Plan
 
-초보자를 위한 단계별 색채 학습 및 컬러디자인 실습 웹앱
+색을 탐색하고 비교하며 나만의 컬러 계획을
+완성하는 인터랙티브 색채 교육 웹앱
 
-## 로컬 실행
+🌐 [웹앱 체험하기](https://my-colorplan.vercel.app/)
 
-```bash
-npm install
-npm run dev
-```
-
-## 빌드
-
-```bash
-npm run build
-npm run preview
-```
-
-© SINGECTION LAB 2026
+## 프로젝트 상태
+- 개발 단계: MVP 구현 완료
+- 학습 구성: 총 6단계
+- 배포 환경: Vercel
