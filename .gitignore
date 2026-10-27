@@ -6,3 +6,5 @@ dist
 images_dummy
 참고자료
 커서요금*.pdf
+.vercel
+.env*
