@@ -9,6 +9,7 @@
   import ReviewScreen from './screens/ReviewScreen.svelte'
   import PlanScreen from './screens/PlanScreen.svelte'
   import { STEP_META } from './types/project'
+  import AppCopyright from './components/AppCopyright.svelte'
   import { store, goNext, goPrev, goTo } from './state/project-state.svelte'
 
   const meta = $derived(STEP_META.find((step) => step.id === store.project.screen) ?? null)
@@ -18,7 +19,7 @@
   )
 
   $effect(() => {
-    document.title = store.project.screen === 'start' ? '마이 브랜드 컬러 캔버스' : `${meta?.title ?? '실습'} · 마이 브랜드 컬러 캔버스`
+    document.title = '컬러플랜'
   })
 </script>
 
@@ -44,19 +45,22 @@
       {/if}
     </main>
     <footer class="app-footer" aria-label="단계 이동">
-    <button class="btn btn-ghost" type="button" onclick={() => goTo('start')}>처음</button>
-    <button class="btn btn-secondary" type="button" onclick={goPrev}>이전</button>
-    {#if meta?.nextLabel}
-      <button
-        class="btn btn-primary"
-        type="button"
-        disabled={!ready}
-        title={meta.nextLabel}
-        onclick={goNext}
-      >
-        다음단계
-      </button>
-    {/if}
+      <div class="app-footer-nav">
+        <button class="btn btn-ghost" type="button" onclick={() => goTo('start')}>처음</button>
+        <button class="btn btn-secondary" type="button" onclick={goPrev}>이전</button>
+        {#if meta?.nextLabel}
+          <button
+            class="btn btn-primary"
+            type="button"
+            disabled={!ready}
+            title={meta.nextLabel}
+            onclick={goNext}
+          >
+            다음단계
+          </button>
+        {/if}
+      </div>
+      <AppCopyright />
     </footer>
   </div>
 {/if}

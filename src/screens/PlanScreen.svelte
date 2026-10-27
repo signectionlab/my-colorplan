@@ -1,12 +1,16 @@
 <script lang="ts">
+  import AppCopyright from '../components/AppCopyright.svelte'
   import ApplyFieldRecolorHero from '../components/ApplyFieldRecolorHero.svelte'
   import ApplyFieldReferenceImage from '../components/ApplyFieldReferenceImage.svelte'
   import BrandMoodboardPanel from '../components/BrandMoodboardPanel.svelte'
   import PlanColorTagRow from '../components/PlanColorTagRow.svelte'
   import StepHero from '../components/StepHero.svelte'
   import { APPLY_FIELD_BY_ID } from '../data/apply-fields'
-  import { hasApplyFieldRecolor } from '../data/apply-field-recolor'
-  import { isApplyFieldReferenceId } from '../data/apply-field-reference-image'
+  import { applyFieldRecolorAssets, hasApplyFieldRecolor } from '../data/apply-field-recolor'
+  import {
+    applyFieldReferenceImageSrc,
+    isApplyFieldReferenceId,
+  } from '../data/apply-field-reference-image'
   import { needsPickSwatchHairline } from '../domain/color-chip'
   import { applyFieldDisplayText } from '../domain/apply-field'
   import { draftSignature } from '../domain/draft-template'
@@ -105,7 +109,7 @@
   let toastTimer: ReturnType<typeof setTimeout> | undefined
 
   const activeGuide = $derived(GUIDE_TABS.find((tab) => tab.id === guideTab) ?? GUIDE_TABS[0])
-  const brandTitle = $derived(brand.name.trim() || '나의 브랜드')
+  const brandTitle = $derived(brand.name.trim() || '나의 색채계획서')
   const docSubtitle = $derived(applyField || '브랜드 컬러디자인 계획서')
   const applyFieldReferenceId = $derived(
     isApplyFieldReferenceId(brand.applyFieldId) ? brand.applyFieldId : null,
@@ -113,6 +117,12 @@
   const applyFieldReferenceTitle = $derived(
     applyFieldReferenceId ? APPLY_FIELD_BY_ID[applyFieldReferenceId].title : '',
   )
+  const showApplyFieldPlanImage = $derived.by(() => {
+    const id = applyFieldReferenceId
+    if (!id) return false
+    if (hasApplyFieldRecolor(id)) return applyFieldRecolorAssets(id) !== null
+    return applyFieldReferenceImageSrc(id) !== null
+  })
 
   function showToast(message: string) {
     toast = message
@@ -153,9 +163,10 @@
   </div>
 
   <div class="plan-wrap">
+    <div class="plan-pre-doc no-print">
     <StepHero
       stepIndex={5}
-      title="나의 브랜드 컬러 계획서"
+      title="컬러플랜 계획서"
       lede="지금까지 선택한 색과 적용 결과를 하나의 계획서로 완성해 보세요."
     />
 
@@ -219,10 +230,11 @@
         <button class="plan-btn" type="button" onclick={acknowledgePlanFacts}>확인했어요</button>
       </div>
     {/if}
+    </div>
 
     <div class="plan-sectionhead">
-      <h2>02. 나의 브랜드 컬러 계획서</h2>
-      <span class="plan-muted">미리보기</span>
+      <h2>02. 컬러플랜 계획서</h2>
+      <span class="plan-muted no-print">미리보기</span>
     </div>
 
     <article class="plan-card plan-document" id="plan-document" aria-labelledby="plan-doc-heading">
@@ -230,7 +242,7 @@
         <div>
           <small>BRAND COLOR PLAN</small>
           <h3 id="plan-doc-heading">{brandTitle}</h3>
-          <span class="plan-muted">{docSubtitle}</span>
+          <p class="plan-doc-subtitle">{docSubtitle}</p>
         </div>
         <span class="plan-pill">최종 계획서</span>
       </div>
@@ -270,12 +282,12 @@
         <h4 class="plan-label">{sectionMap.basics?.title.replace(/^\d+\.\s*/, '') ?? '브랜드 기본 정보'}</h4>
         {#each sectionMap.basics?.facts ?? [] as fact (fact.label)}
           {#if fact.label === '색 활용 분야'}
-            <div class="plan-apply-field-row">
-              <p class="plan-meta-line plan-apply-field-copy">
-                <strong>{fact.label}</strong>
-                {fact.value.trim() || PLAN_BLANK}
-              </p>
-              {#if applyFieldReferenceId}
+            {#if showApplyFieldPlanImage && applyFieldReferenceId}
+              <div class="plan-apply-field-row">
+                <p class="plan-meta-line plan-apply-field-copy">
+                  <strong>{fact.label}</strong>
+                  {fact.value.trim() || PLAN_BLANK}
+                </p>
                 <div class="plan-apply-field-media">
                   {#if hasApplyFieldRecolor(applyFieldReferenceId)}
                     <ApplyFieldRecolorHero
@@ -295,8 +307,13 @@
                     />
                   {/if}
                 </div>
-              {/if}
-            </div>
+              </div>
+            {:else}
+              <p class="plan-meta-line">
+                <strong>{fact.label}</strong>
+                {fact.value.trim() || PLAN_BLANK}
+              </p>
+            {/if}
           {:else}
             <p class="plan-meta-line"><strong>{fact.label}</strong> {fact.value.trim() || PLAN_BLANK}</p>
           {/if}
@@ -342,7 +359,7 @@
               </label>
             {/each}
           </div>
-        {/each}
+    {/each}
       </div>
 
       <hr class="plan-rule" />
@@ -371,7 +388,9 @@
           <pre>{plan.text}</pre>
         </div>
       {/if}
-    </article>
+
+      <p class="plan-print-copyright plan-print-only"><AppCopyright /></p>
+</article>
 
     <section class="plan-finish no-print" aria-labelledby="plan-finish-title">
       <div>
@@ -611,6 +630,13 @@
     font-weight: 800;
     line-height: 1.2;
   }
+  .plan-doc-subtitle {
+    margin: 0;
+    color: var(--plan-muted);
+    font-size: 16px;
+    line-height: 1.45;
+    font-weight: 500;
+  }
   .plan-rule {
     border: 0;
     border-top: 1px solid #e8e9ef;
@@ -828,6 +854,16 @@
   .plan-print-only {
     display: none;
   }
+  .plan-print-copyright {
+    margin: 24px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid #e8e9ef;
+    text-align: center;
+  }
+  .plan-print-copyright :global(.app-copyright) {
+    color: #6b7089;
+    font-size: 10px;
+  }
 
   @media (max-width: 640px) {
     .plan-wrap {
@@ -885,10 +921,37 @@
       border: 0;
     }
     .plan-sectionhead {
-      margin-top: 10px;
+      margin: 0 0 8px;
+    }
+    .plan-sectionhead h2 {
+      font-size: 18px;
     }
     .plan-scene {
       max-width: 450px;
+    }
+    .plan-apply-field-row {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .plan-apply-field-media {
+      max-width: 100%;
+      width: 100%;
+      max-height: 92mm;
+      aspect-ratio: 1586 / 992;
+      height: auto;
+      margin-inline: auto;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .plan-apply-field-media :global(.apply-ref-media),
+    .plan-apply-field-media :global(.recolor-hero) {
+      max-height: 92mm;
+      height: 100%;
+    }
+    .plan-apply-field-media :global(img),
+    .plan-apply-field-media :global(canvas) {
+      max-height: 92mm;
+      object-fit: contain;
     }
     .plan-print-only {
       display: block;

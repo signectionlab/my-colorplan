@@ -18,7 +18,6 @@
     canAddBrandImagePick,
     canExpandBrandImageSlots,
     effectiveImagePickSlotCount,
-    hasBrandImage,
     showImagePickDecisionSlot,
   } from '../domain/brand-image'
   import { needsPickSwatchHairline } from '../domain/color-chip'
@@ -44,7 +43,6 @@
   const addingDone = $derived(brand.imagePickAddingDone)
   const canAddPick = $derived(canAddBrandImagePick(brand))
   const showDecisionSlot = $derived(showImagePickDecisionSlot(brand))
-  const canProceed = $derived(hasBrandImage(brand))
 
   const tones = $derived.by(() => {
     if (!selectedHueId) return []
@@ -150,21 +148,58 @@
 
 </script>
 
-<section class="picker card" aria-labelledby="brand-image-heading">
-  <div class="result result-sticky" aria-live="polite">
-    <p class="subhead">
-      선택 결과
-      <span class="slot-count">{pickCount}개</span>
-      {#if addingDone}
-        <span class="adding-done-badge">추가 완료</span>
-      {/if}
-    </p>
-    <p class="result-slot-hint caption caption-guide">
-      기본 {BRAND_IMAGE_PICK_MIN}칸 · 최대 {BRAND_IMAGE_PICK_MAX}개. {BRAND_IMAGE_PICK_MIN}개를 채우면 다음 칸에서 「색
-      추가」 또는 「더 이상 선택 안함」을 고를 수 있어요.
-    </p>
-    <div class="picked-row">
-      <ul class="picked-list">
+<section class="picker card" aria-labelledby="brand-picks-heading">
+  <div class="result" aria-labelledby="brand-picks-heading" aria-live="polite">
+    <header class="result-head">
+      <p class="step-badge">STEP 1 · 활동 1</p>
+      <div class="result-head-row">
+        <h3 id="brand-picks-heading">내가 선택한 색</h3>
+        <p class="result-meta" aria-live="polite">
+          <span class="slot-count">{pickCount}개</span>
+          {#if addingDone}
+            <span class="adding-done-badge">추가 완료</span>
+          {/if}
+        </p>
+      </div>
+      <p class="result-lede">선택한 색을 슬롯으로 확인해보세요</p>
+    </header>
+    <details class="result-tip">
+      <summary class="result-tip-summary">
+        <span class="result-tip-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M12 2a6.5 6.5 0 0 0-3.8 11.8V16a1 1 0 0 0 1 1h5.6a1 1 0 0 0 1-1v-2.2A6.5 6.5 0 0 0 12 2Z"
+              fill="currentColor"
+              opacity="0.2"
+            />
+            <path
+              d="M12 2a6.5 6.5 0 0 0-3.8 11.8V16a1 1 0 0 0 1 1h5.6a1 1 0 0 0 1-1v-2.2A6.5 6.5 0 0 0 12 2Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            />
+            <path d="M9 18h6M10 22h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span id="brand-picks-tip-title" class="result-tip-summary-text">색 선택 방법 안내</span>
+        <span class="result-tip-chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="result-tip-panel">
+        <p class="result-tip-body">
+          1. 먼저 가장 표현하고 싶은 분위기를 생각해 보세요. 따뜻함, 신뢰감, 활기 등 원하는 느낌을 떠올리면 색을 고르기
+          쉬워집니다.
+        </p>
+        <p class="result-tip-subhead">2.슬롯에 색 추가 방법</p>
+        <p class="result-tip-body">
+          기본 {BRAND_IMAGE_PICK_MIN}칸 ~ 최대 {BRAND_IMAGE_PICK_MAX}개 까지 채울 수 있어요. <br>{BRAND_IMAGE_PICK_MIN}개를 채우면 다음 칸에서 <b>「색
+          추가」</b> 또는 <b>「더 이상 선택 안함」</b>선택하여 색을 추가할 수 있어요. (색이 많을수록 배색 난이도는 올라갑니다.)
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <div class="picked-row result-slots-sticky" aria-label="선택한 색 슬롯" aria-live="polite">
+    <ul class="picked-list">
         {#each { length: slotCount } as _, slotIndex}
           {@const pick = brand.imagePicks[slotIndex]}
         {#if pick}
@@ -259,33 +294,15 @@
             </div>
           </li>
         {/if}
-      </ul>
-    </div>
+    </ul>
   </div>
 
-  <header class="step-head">
-    <p class="step-badge">STEP 1</p>
-    <h3 id="brand-image-heading">전달하고 싶은 이미지</h3>
-    <p class="lede-step">
-      먼저 브랜드를 표현할 색상을 선택해 주세요. <strong class="pick-range">{BRAND_IMAGE_PICK_MIN}~{BRAND_IMAGE_PICK_MAX}개</strong>까지 담을 수
-      있어요.
+  <div class="hue-section-head">
+    <p class="subhead">유채색</p>
+    <p class="hue-section-caption caption caption-guide" role="note">
+      KS 산업규격 먼셀 10색상환·KS기본색명 기준
     </p>
-    <p class="pick-counter" class:ok={canProceed} aria-live="polite">
-      선택 {pickCount} / {BRAND_IMAGE_PICK_MAX}
-      {#if !canProceed}
-        <span class="pick-hint">
-          (기본 {BRAND_IMAGE_PICK_MIN}칸 · {BRAND_IMAGE_PICK_MIN}개 채운 뒤 「더 이상 선택 안함」)
-        </span>
-      {/if}
-    </p>
-  </header>
-
-  <aside class="notice" role="note" aria-labelledby="brand-image-notice-title">
-    <p id="brand-image-notice-title" class="notice-title">Notice</p>
-    <p class="notice-body">KS 산업규격 먼셀 10색상환 기준. 색명은 KS기본색명임.</p>
-  </aside>
-
-  <p class="subhead">유채색</p>
+  </div>
   <div class="hue-grid chromatic" role="group" aria-label="유채색 10색">
     {#each chromatic as hue}
       {@const selected = selectedHueId === hue.id}
@@ -310,7 +327,6 @@
       {#if selected}
         <div class="hue-tone-panel" aria-labelledby="step2-heading-{hue.id}">
           <header class="tone-panel-head">
-            <p class="step-badge">STEP 2</p>
             <h4 id="step2-heading-{hue.id}">색상의 톤을 선택해 주세요</h4>
             <p class="lede-step tone-panel-lede">선택한 색상이 어떤 느낌으로 전달되기를 원하시나요?</p>
             <p class="selected-pill" role="status">
@@ -465,7 +481,6 @@
     margin-bottom: 24px;
     background: var(--canvas-soft);
   }
-  .step-head { margin-bottom: 20px; }
   .hue-tone-panel {
     grid-column: 1 / -1;
     margin: 4px 0 12px;
@@ -476,9 +491,6 @@
   }
   .tone-panel-head {
     margin-bottom: 16px;
-  }
-  .tone-panel-head .step-badge {
-    margin: 0 0 6px;
   }
   .tone-panel-head h4 {
     margin: 0 0 8px;
@@ -491,41 +503,30 @@
   h3 { margin-bottom: 6px; }
   h4 { margin: 0 0 10px; font-size: 1.05rem; font-weight: 600; }
   .lede-step { color: var(--ink-mute); font-size: 15px; line-height: 1.5; }
-  .pick-range { font-weight: 600; color: var(--ink); }
-  .pick-counter {
-    margin: 10px 0 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink-mute);
-  }
-  .pick-counter.ok { color: var(--primary-press); }
-  .pick-hint { font-weight: 500; font-size: 13px; }
   .pick-message {
     margin: 12px 0 0;
     font-size: 13px;
     color: var(--primary-press);
     line-height: 1.45;
   }
-  .notice {
-    margin-bottom: 20px;
-    padding: 12px 14px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--hairline);
-    background: #fff;
+  .hue-section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 12px;
+    margin-bottom: 12px;
   }
-  .notice-title {
-    margin: 0 0 6px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-  }
-  .notice-body {
+  .hue-section-head .subhead {
     margin: 0;
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--ink-mute);
+  }
+  .hue-section-caption {
+    margin: 0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--step-accent-soft, #f0eeff);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
   }
   .subhead {
     font-size: 14px;
@@ -876,36 +877,138 @@
   }
   .result {
     padding: 14px 16px;
+    margin: 0 0 12px;
     border: 1px solid var(--hairline);
     border-radius: var(--radius-lg);
     background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
-  .result-sticky {
+  .result-head {
+    margin: 0;
+  }
+  .result-head-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 12px;
+    margin-bottom: 4px;
+  }
+  .result-head h3 {
+    margin: 0;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .result-lede {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-mute);
+  }
+  .result-meta {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-mute);
+  }
+  .result-tip {
+    margin: 0;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--hairline);
+    background: var(--canvas-soft);
+    overflow: hidden;
+  }
+  .result-tip-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+  }
+  .result-tip-summary::-webkit-details-marker {
+    display: none;
+  }
+  .result-tip-summary:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+  .result-tip-icon {
+    display: flex;
+    flex-shrink: 0;
+    color: var(--primary);
+  }
+  .result-tip-summary-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .result-tip-chevron {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--ink-mute);
+    border-bottom: 2px solid var(--ink-mute);
+    transform: rotate(45deg);
+    margin-top: -2px;
+    transition: transform 0.15s ease;
+  }
+  .result-tip[open] .result-tip-chevron {
+    transform: rotate(-135deg);
+    margin-top: 2px;
+  }
+  .result-tip-panel {
+    padding: 0 12px 12px;
+    border-top: 1px solid var(--hairline);
+  }
+  .result-tip-panel .result-tip-body:first-child {
+    margin-top: 10px;
+  }
+  .result-tip-body {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .result-tip-subhead {
+    margin: 12px 0 4px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .result-slots-sticky {
     position: sticky;
     top: calc(var(--app-save-bar-h) + 10px);
     z-index: 15;
     margin: 0 0 20px;
-    max-height: min(52vh, 380px);
-    overflow: auto;
+    padding: 14px 16px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: #fff;
     box-shadow:
       0 4px 16px rgba(13, 37, 61, 0.08),
       0 0 0 1px rgba(255, 255, 255, 0.8) inset;
     -webkit-overflow-scrolling: touch;
   }
   @media (max-width: 520px) {
-    .result-sticky {
+    .result-slots-sticky {
       top: calc(var(--app-save-bar-h) + 8px);
-      max-height: min(58vh, 420px);
     }
   }
   .slot-count {
     font-weight: 600;
     color: var(--primary-press);
-  }
-  .result-slot-hint {
-    margin: 0 0 10px;
-    font-size: 11px;
-    line-height: 1.4;
   }
   .picked-row {
     display: flex;

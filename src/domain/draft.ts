@@ -38,7 +38,7 @@ export function buildDraft(project: Project): string {
   if (review.ratioNote.trim()) lines.push(`- 비율/역할: ${review.ratioNote.trim()}`)
   lines.push('')
   lines.push('---')
-  lines.push('이 문서는 「마이 브랜드 컬러 캔버스」 실습 결과를 바탕으로 한 초안입니다.')
+  lines.push('이 문서는 「컬러플랜」 실습 결과를 바탕으로 한 초안입니다.')
   return lines.join('\n')
 }
 

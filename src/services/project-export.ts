@@ -11,7 +11,7 @@ function download(content: string, filename: string, type: string) {
 }
 
 export function downloadProjectJson(project: Project) {
-  download(JSON.stringify(project, null, 2), 'my-brand-color.json', 'application/json')
+  download(JSON.stringify(project, null, 2), 'color-plan.json', 'application/json')
 }
 
 export function downloadPlanMarkdown(project: Project) {

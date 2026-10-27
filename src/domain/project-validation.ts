@@ -1,6 +1,12 @@
 import { migrateApplyFieldFromLegacy, parseApplyFieldId } from './apply-field'
 import { BRAND_IMAGE_PICK_MAX, normalizeAccentPlanPickKeys, normalizeBrandImageSlots } from './brand-image'
-import type { BrandImagePick, Project, RoleName } from '../types/project'
+import {
+  isKnownProjectKind,
+  PROJECT_KIND,
+  type BrandImagePick,
+  type Project,
+  type RoleName,
+} from '../types/project'
 import { createDefaultProject } from './default-project'
 import { mergeCompareFromRaw, mergePaletteMetaFromRaw } from './compare-normalize'
 import { mergeLearnFromRaw, normalizeLearnState } from './learn-normalize'
@@ -73,7 +79,7 @@ function screen(value: unknown): Project['screen'] {
 export function validateProjectFile(data: unknown): { ok: true; project: Project } | { ok: false; error: string } {
   const raw = rec(data)
   if (!raw) return { ok: false, error: 'JSON 객체가 아닙니다.' }
-  if (raw.kind !== 'my-brand-color-canvas') return { ok: false, error: '이 앱에서 저장한 파일이 아닙니다.' }
+  if (!isKnownProjectKind(raw.kind)) return { ok: false, error: '이 앱에서 저장한 파일이 아닙니다.' }
   if (raw.version !== 1 && raw.version !== 2) return { ok: false, error: '지원하지 않는 버전입니다.' }
 
   const base = createDefaultProject()
@@ -163,6 +169,7 @@ export function validateProjectFile(data: unknown): { ok: true; project: Project
   }
   base.screen = screen(raw.screen)
   base.version = 2
+  base.kind = PROJECT_KIND
   normalizeLearnState(base.learn, base.brand.imagePicks)
   return { ok: true, project: base }
 }

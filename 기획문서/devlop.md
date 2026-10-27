@@ -1,7 +1,9 @@
-# 컬러 교육 웹앱 개발기획서 기술 스택 수정
+# 컬러플랜 — 개발기획서 (기술 스택)
 
-- 문서 버전: v0.3
-- 수정일: 2026년 10월 23일
+- Copyright: © SINGECTION LAB 2026
+- 문서 버전: v0.5
+- 수정일: 2026년 10월 27일
+- 서비스명: **컬러플랜** (JSON `kind`: `color-plan`, 이전 `my-brand-color-canvas` 불러오기 호환)
 - 변경 사항: 프런트엔드 프레임워크를 Svelte로 확정
 - 삭제 사항: 기존 문서의 ‘스텔스 개발’ 용어와 정의
 - 유지 사항: 초기 DB·회원가입·로그인·결제 제외, 핵심 학습 기능 우선 구현
@@ -10,7 +12,7 @@
 
 ## 1. 개발 방향
 
-Svelte를 사용해 컬러 교육 웹앱을 개발한다.
+Svelte를 사용해 **컬러플랜** 컬러 교육 웹앱을 개발한다.
 
 초기에는 별도의 서비스 DB와 애플리케이션 서버 없이 브라우저에서 핵심 기능이 동작하도록 구성한다.
 
@@ -62,7 +64,7 @@ Svelte를 사용해 컬러 교육 웹앱을 개발한다.
 
 ### 3.2 공통 상태
 
-브랜드 정보, 팔레트, 학습 기록, 계획 초안을 하나의 작업 상태(`Project`, version 2)로 관리한다.
+브랜드 정보, 팔레트, 학습 기록, 계획 초안을 하나의 작업 상태(`Project`, `kind: 'color-plan'`, version 2)로 관리한다. 예전 JSON·localStorage(`my-brand-color-canvas`)는 불러온 뒤 `color-plan`으로 정규화한다.
 
 2단계 `learn` (요약):
 
@@ -76,14 +78,28 @@ Svelte를 사용해 컬러 교육 웹앱을 개발한다.
 
 3단계 `compare` (요약):
 
-- `background`, `text`, `shape`, `baseline`, `readabilityChoice`, `surroundChoice`, `brandExperimentChoice`, `observationDetail`, `surroundBgA`, `surroundBgB`, `surroundShape`, `observation`(호환)
+- `background`, `text`, `shape`, `baseline`, `surroundBgA`, `surroundBgB`, `surroundShape`
+- `readabilityChoice`, `surroundChoice`, `brandExperimentChoice`, `observationDetail`, `observation` — 화면 없음, JSON 호환
 - 도메인: `compare-ux.ts`, `compare-normalize.ts`. 화면: `CompareScreen.svelte`. 상세는 plan.md §5.4.
 
 4단계 `palette` (추가 필드):
 
-- `comboReasonChoice`, `comboReason` — 조합 선택 이유(선택형 + 메모)
+- `comboReasonChoice`, `comboReason` — 조합 선택 이유. **4단계 UI는 보류**, 필드만 유지
 - 표시: `palette-display.ts` (`pickShortLabel`, `paletteCardTitle`)
-- 화면: `PaletteScreen.svelte`, 미리보기 `BrandPreview.svelte` + `preview-ink.ts`. 상세는 plan.md §5.5.
+- 화면: `PaletteScreen.svelte`, 미리보기 `PaletteHeroPreview.svelte` + `preview-ink.ts`. 역할 구간은 `role-assignment.ts`의 `roleForSlotRatio`. 상세는 plan.md §5.5·§6.2.
+
+5단계 `review` (요약):
+
+- `brandImageFeel`, `keyColorRowId`, `usageSelections`, `usageReasonChoice`, `usageReasonCustom`
+- `primaryRoleQuiz` — 화면 없음, JSON 호환
+- 목업: 분야와 무관한 `mokup-all.svg`, 칠하기 `mood-mokup-all-recolor.ts`
+- 화면: `ReviewScreen.svelte`. 상세는 plan.md §5.6.
+
+6단계 `plan` (요약):
+
+- `fieldEdits`, `sectionEdits`, `decision`, `memo`, `acknowledgedFactSignature`
+- 화면 편집은 슬롯 선택 이유. Markdown은 `plan-document.ts`의 `planView`
+- PDF는 브라우저 인쇄. 화면: `PlanScreen.svelte`. 상세는 plan.md §5.7.
 
 색과 비율을 변경하면 관련 화면이 동일한 상태를 기준으로 갱신되어야 한다.
 
@@ -173,6 +189,7 @@ src/
     ColorPicker.svelte
     PaletteBar.svelte
     BrandPreview.svelte
+    PaletteHeroPreview.svelte
     SaveStatus.svelte
 
   state/
@@ -196,9 +213,12 @@ src/
     project-validation.ts
     project-file.ts
     draft-template.ts
-    mood-mokup-palette.ts
-    mood-mokup-space-recolor.ts
+    plan-document.ts
+    palette-preview-context.ts
+    accent-part-ratios.ts
+    mood-mokup-all-recolor.ts
     mood-mokup-color-map.ts
+    brand-moodboard-svg.ts
     review-normalize.ts
 
   data/

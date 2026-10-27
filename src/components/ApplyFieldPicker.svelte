@@ -27,10 +27,8 @@
 </script>
 
 <section class="apply-field" aria-labelledby="apply-field-heading">
-  <h3 id="apply-field-heading">내 브랜드의 색을 어디에 사용하고 싶나요?</h3>
-  <p class="lede">가장 먼저 적용할 곳을 하나 선택하세요. 나중에 바꿀 수 있어요.</p>
-  <p class="optional caption caption-guide">선택하지 않아도 다음 단계로 진행할 수 있어요.</p>
-  <p class="optional caption caption-guide other-hint">직접 입력·미정이면 5단계에서 다섯 분야 무드보드를 골라 볼 수 있어요.</p>
+  <h3 id="apply-field-heading">선택한 색상을 어디에 사용하고 싶나요?</h3>
+  <p class="lede">적용할 곳을 하나 선택하세요. 나중에 바꿀 수 있어요.</p>
 
   <div class="card-grid" role="radiogroup" aria-labelledby="apply-field-heading">
     {#each APPLY_FIELD_OPTIONS as option (option.id)}

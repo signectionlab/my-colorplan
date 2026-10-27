@@ -1,0 +1,1 @@
+export const APP_COPYRIGHT = '© SINGECTION LAB 2026'

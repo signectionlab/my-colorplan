@@ -254,6 +254,8 @@ components:
     padding: 64px 24px
 ---
 
+- Copyright: © SINGECTION LAB 2026
+
 ## 개요
 
 Stripi의 디자인 언어는 메시 그라데이션에서 시작한다.
@@ -582,6 +584,7 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 - 타이포그래피: `{typography.caption}`
 - 안쪽 여백: `{spacing.huge} {spacing.xl}`, 즉 64px 24px
 - 4–6열의 링크 그룹, 소셜 아이콘, 작은 법적 고지 영역을 포함한다.
+- 법적 고지 영역에는 `© SINGECTION LAB 2026`을 표기한다.
 
 ## 권장 사항과 금지 사항
 
@@ -642,7 +645,7 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 6. `body`에는 `ss01`을 전역 적용하고, 숫자 콘텐츠에는 요소별로 `tnum`을 적용한다.
 7. 마케팅 히어로의 메시 그라데이션은 필수다. 장식 없는 단색 배경의 히어로는 브랜드의 일관성을 해친다.
 
-## 마이 브랜드 컬러 캔버스 — 실습 화면 UI
+## 컬러플랜 — 실습 화면 UI
 
 교육 웹앱 실습 구간은 마케팅용 메시 그라데이션을 쓰지 않는다. `{colors.canvas}` / `{colors.canvas-soft}` / `{colors.stage}`(앱 토큰 `--stage`) 위에서 **학습자가 고른 색**이 가장 강한 시각 정보가 되도록 한다.
 
@@ -652,6 +655,13 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 - 주 행동: `{button-primary-pill}` 「다음단계」, 보조 `{button-secondary}` / `{button-ghost}`.
 - 카드: `{colors.canvas}` 배경, `{colors.hairline}` 테두리, `{rounded.lg}`(12px) — 활동 단위 구분.
 - 숫자·HEX: `{typography.body-tabular}` / `.tabular`, 대비 `{colors.ink-mute}`.
+
+### 1단계 · 색 선택 (`BrandImagePicker`)
+
+**step 배지** — 1단계: `.result-head` `STEP 1 · 활동 1` + 선택 마친 뒤 `BrandColorPlan` `STEP 1 · 활동 2`만. `.hue-tone-panel` 톤 UI에는 배지 없음.
+
+- **활동 1** (`STEP 1 · 활동 1`): `.result-head` → `.result-tip` → `.result-slots-sticky`(sticky) → 「유채색」 subhead + KS 캡션·hue 그리드·톤 패널(제목만).
+- **색채계획** (`STEP 1 · 활동 2`): `BrandColorPlan` 헤더 — 주·보·강 배정·비율.
 
 ### 2단계 · 내 색 이해하기 (`LearnScreen`)
 
@@ -695,8 +705,8 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 **위계**
 
 1. Lede + `compare` / `palette` 분리 `caption`.
-2. **활동 1** — pick 칩·**지금 미리보기**·나란히 비교·비교 기준 버튼 2개. 「브랜드 색 확정」 카피 금지.
-3. **활동 2** — 도형·배경 A/B 칩·양쪽 패널(배경 A/B **동일 색 불가**).
+2. **활동 1 · 가독성** — 큰 빌보드 → 배경 칩 / 글자 칩 + 웹 본문 기본색(`#333333`, `#ffffff`, 라벨 「기본」) → 대비 참고 문장. 나란히 비교·기준 저장은 `details` **나란히 비교 · 관찰 기록**(기본 펼침). 「브랜드 색 확정」 카피 금지. `readabilityChoice` UI 없음.
+3. **활동 2 · 주변색 효과** — 제목 「주변 색에 따른 차이 관찰하기」. 도형·배경 A·배경 B 칩과 양쪽 패널(배경 A/B **동일 색 불가**). `surroundChoice` UI 없음.
 
 **스와치**
 
@@ -705,7 +715,7 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 
 **반응형**
 
-- `< 640px`: compare-grid 1열; preset·btn-row wrap.
+- `< 640px`: 빌보드·칩 줄·나란히 비교는 한 열로 줄인다. 글자 줄의 기본색 묶음은 줄바꿈된다.
 
 ### 4~6단계 · 활동 카드 (2~3단계와 동일)
 
@@ -716,28 +726,23 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 
 **위계**
 
-1. **활동 1** — 1단계 pick + 색의 역할(`BrandColorPlan` / `role-tiles`).
-2. **활동 2** — `PaletteRatioStackEditor`(경계 드래그) · 강조 분할(`accentPartRatios`) · `PaletteHeroPreview` · **기준안 저장** CTA.
-3. **미구현(MVP)** — 「더 조정하기」 — `plan.md` §5.5.
+1. **활동 1** — 1단계 pick + 색의 역할(`BrandColorPlan` readonly 또는 `role-tiles`).
+2. **활동 2** — `PaletteRatioStackEditor`(경계 드래그, 역할 구간 주 51~70 · 보 11~50 · 강 1~10) · 강조 분할(`accentPartRatios`) · 프리셋 70·20·10 / 60·30·10 · `PaletteHeroPreview` · **기준안 저장**.
+3. **미구현(MVP)** — 「더 조정하기」·조합 이유 UI — `plan.md` §5.5.
 
 **미리보기**
 
-- `PaletteHeroPreview` + `palette-preview-context`(4·5단계 공통 accent derived).
-- 강조 2색 pick 시 Hero CTA·막대 segment에 각각 반영.
-
-**레이아웃**
-
-- `@media (min-width: 960px)`: `grid` 1fr + 380px aside; 활동 3 패널 `sticky`.
-- `< 960px`: 단일 열 — 활동 1 → 2 → 4 → 3(미리보기).
+- 활동 2 카드 안, 조절 막대 아래 `PaletteHeroPreview`. `palette-preview-context`로 4·5·6단계 accent derived를 맞춘다.
+- 강조 2~3색 pick 시 막대 segment·Hero에 각각 반영.
+- 별도 sticky 사이드 패널·활동 3·4 카드는 쓰지 않는다. 역할 카드만 좁은 화면에서 1열이다.
 
 ### 5단계 · 적용과 점검 (`ReviewScreen`)
 
-**위계 (카드 4블록 + 푸터 네비)**
+**위계 (카드 3블록 + 푸터 네비)**
 
-1. **무드보드 카드** — `activity-title` 「브랜드 무드보드」, `PaletteBarSegments`(범례 **컬러칩** `legend-swatch`), `BrandMoodboardPanel`(`moodboard-panel` 70% · `moodboard-stage` · SVG host).
-2. **활동 1 카드** — `step-badge` 「STEP 5 · 활동 1」, 1단계 색 strip, `choice-fieldset` / `choice-option`(4단계와 동일 라디오 카드 스타일), follow-up `color-pick-grid`.
-3. **활동 2 카드** — `palette-summary` 리스트, `primary-quiz-head`(주조 칩 + 질문), `learn-note`(칩 + 설명).
-4. **활동 3 카드** — `usage-row`, `place-chip`(pill 토글), 활용 이유 라디오, optional `custom-reason` textarea.
+1. **적용 결과 카드** — `step-badge` 「STEP 5 · 적용과 점검」, `activity-title` 「내 브랜드 컬러 적용 결과」, `PaletteBarSegments`(범례 **컬러칩** `legend-swatch`), `BrandMoodboardPanel`(`moodboard-panel` 70% · `moodboard-stage` · SVG host). SVG는 분야와 무관하게 `mokup-all.svg`.
+2. **활동 1 카드** — `step-badge` 「STEP 5 · 활동 1」, 1단계 색 strip, `choice-fieldset` / `choice-option`, follow-up `color-pick-grid`. 「다른 느낌」 등이면 4단계 이동 버튼.
+3. **활동 2 카드** — `usage-row`, `place-chip`(pill 토글), 활용 이유 라디오, optional `custom-reason` textarea. 주조 역할 퀴즈 카드는 없다.
 
 **공통 색 행**
 
@@ -746,13 +751,24 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 **미리보기 구분**
 
 - 막대 = 4단계 **비율·역할** 요약.
-- 무드보드 = 분야별 **SVG** 목업(공간=고정 HEX 매핑, 기타=면적·% 매핑). 2단계 `apply-*.png`와 별도.
+- 무드보드 = **통합 SVG** `mokup-all.svg`(샘플 HEX·class → 주·보·강조). 2단계 `apply-*.png`, 디스크에 남은 분야별 `mokup-*.svg`와 별도. 상세는 `mood-mokup-assets.md`.
 
-**1단계** — 분야 피커 아이콘만. **2단계** — 참고 PNG. **5단계** — `mokup-*.svg` only.
+**1단계** — 분야 피커 아이콘만. **2단계** — 참고 PNG. **5·6단계 적용 장면** — `mokup-all.svg` only.
+
+### 6단계 · 계획서 완성 (`PlanScreen`)
+
+**위계**
+
+1. 도구 막대 — 복사 · Markdown · JSON · PDF로 저장(`window.print`).
+2. **01. 완성 전 점검** — 체크 3줄, 가이드 탭 3개, 결정 라디오(유지 / 4단계 / 5단계). `no-print`.
+3. **02. 계획서** — 팔레트 막대, 브랜드·분야, 1단계 색, 슬롯 선택 이유 입력, `BrandMoodboardPanel`(5단계와 같은 SVG).
+4. **03. 계획서 완성하기** — 인쇄 버튼. `no-print`.
+
+인쇄 스타일은 점검·입력칸·완성 버튼을 숨기고 본문만 남긴다. 화면 역할은 `plan.md` §5.7.
 
 ### design.md와 plan.md
 
-화면 역할·저장 필드는 `기획문서/plan.md` §5.3~§5.5를 따른다. 토큰·컴포넌트 이름은 본 문서의 `{colors.*}`, `{rounded.*}`, 버튼 변형을 우선한다.
+화면 역할·저장 필드는 `기획문서/plan.md` §5.3~§5.7을 따른다. 토큰·컴포넌트 이름은 본 문서의 `{colors.*}`, `{rounded.*}`, 버튼 변형을 우선한다.
 
 </design-context>
 

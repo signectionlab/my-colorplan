@@ -128,11 +128,24 @@ describe('contrast and draft', () => {
 describe('project file', () => {
   it('keeps a v1 brand name', () => {
     const result = validateProjectFile({
-      kind: 'my-brand-color-canvas',
+      kind: 'color-plan',
       version: 1,
       brand: { name: 'V1' },
     })
     expect(result.ok).toBe(true)
     if (result.ok) expect(result.project.brand.name).toBe('V1')
+  })
+
+  it('accepts legacy project kind and normalizes to color-plan', () => {
+    const result = validateProjectFile({
+      kind: 'my-brand-color-canvas',
+      version: 2,
+      brand: { name: 'Legacy' },
+    })
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.project.kind).toBe('color-plan')
+      expect(result.project.brand.name).toBe('Legacy')
+    }
   })
 })

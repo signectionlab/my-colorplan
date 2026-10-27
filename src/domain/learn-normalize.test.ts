@@ -71,7 +71,7 @@ describe('learn normalize', () => {
   it('preserves v2 learn records on import', () => {
     const key = 'R:v'
     const result = validateProjectFile({
-      kind: 'my-brand-color-canvas',
+      kind: 'color-plan',
       version: 2,
       brand: {
         imagePicks: [{ hueId: 'R', toneId: 'v', hex: '#cf0000' }],

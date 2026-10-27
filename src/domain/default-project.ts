@@ -1,9 +1,9 @@
-import type { Project } from '../types/project'
+import { PROJECT_KIND, type Project } from '../types/project'
 import { COMPARE_SURROUND_BG_DEFAULT } from './compare-ux'
 
 export function createDefaultProject(): Project {
   return {
-    kind: 'my-brand-color-canvas',
+    kind: PROJECT_KIND,
     version: 2,
     screen: 'start',
     brand: {

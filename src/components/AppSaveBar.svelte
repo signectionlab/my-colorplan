@@ -6,7 +6,7 @@
 <div class="app-save-bar">
   <div class="app-save-bar-inner">
     <button class="app-save-brand" type="button" onclick={() => goTo('brand')} aria-label="1단계 브랜드 화면으로 이동">
-      MY BRAND COLOR
+      컬러플랜
     </button>
     <SaveStatus compact onDark />
     <button class="btn btn-save" type="button" onclick={saveProjectNow}>저장하기</button>

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { APP_COPYRIGHT } from '../constants/copyright'
 import { createDefaultProject } from './default-project'
 import {
   PLAN_BLANK,
@@ -21,6 +22,7 @@ describe('plan document', () => {
     expect(markdown).toContain('브랜드 컬러 계획서')
     expect(markdown).toContain('색상 팔레트, HEX, 역할과 사용 비율')
     expect(markdown).not.toContain('대비 실습')
+    expect(markdown).toContain(APP_COPYRIGHT)
     expect(planView(project).map((section) => section.id)).toEqual([
       'basics',
       'imageGoal',

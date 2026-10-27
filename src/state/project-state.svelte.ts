@@ -28,7 +28,7 @@ import {
   normalizeBrandImageSlots,
   syncBrandKeywordsFromPicks,
 } from '../domain/brand-image'
-import { STEPS } from '../types/project'
+import { PROJECT_KIND, STEPS } from '../types/project'
 import { createDefaultProject } from '../domain/default-project'
 import { normalizeHex } from '../domain/color-validation'
 import {
@@ -76,7 +76,7 @@ function copyProject(source: Project) {
   const target = store.project
   target.screen = source.screen
   target.version = 2
-  target.kind = 'my-brand-color-canvas'
+  target.kind = PROJECT_KIND
   Object.assign(target.brand, source.brand)
   target.brand.keywords = [...(source.brand.keywords ?? [])]
   target.brand.imagePicks = (source.brand.imagePicks ?? []).map((pick) => ({ ...pick }))

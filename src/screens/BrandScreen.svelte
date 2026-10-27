@@ -10,7 +10,7 @@
   const selectionSettled = $derived(isBrandImageSelectionSettled(store.project.brand))
 </script>
 
-<Field label="브랜드명 또는 사업 아이디어" value={store.project.brand.name} placeholder="예: 온기 베이커리" oninput={(value) => patchBrand({ name: value })} />
+<Field label="색을 사용할 대상" value={store.project.brand.name} placeholder="예: 작은 디저트 카페, 천연 화장품 브랜드, SNS 홍보 포스터 등" oninput={(value) => patchBrand({ name: value })} />
 
 <ApplyFieldPicker />
 

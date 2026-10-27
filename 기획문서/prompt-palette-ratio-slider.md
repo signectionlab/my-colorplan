@@ -1,7 +1,13 @@
 # 구현 프롬프트 · 4단계 팔레트 비율 조절 슬라이더
 
-아래 블록을 그대로 Agent/개발 작업 지시에 붙여 넣어 사용한다.  
-대상 코드베이스: `my-brand-color-canvas` · STEP 4 `PaletteScreen` · `PaletteRatioStackEditor` · `domain/role-assignment.ts` · `domain/ratio-calculation.ts` · `state/project-state.svelte.ts`.
+- Copyright: © SINGECTION LAB 2026
+
+상태: **화면 반영됨** (2026-10-27). 역할 구간표(주 51~70 · 보 11~50 · 강 1~10, 50%는 보조)는 `roleForSlotRatio`와 같다.
+
+구현과 다른 점: **70% 초과를 70으로 클램프하지 않는다.** 그 값은 보조색 라벨로 남긴다. 슬롯 최소 1%·합 100%·강조 1색일 때 3번 슬롯 상한 10%는 유지한다. 기획 기준은 `plan.md` §6.2.
+
+아래 블록은 당시 작업 지시 원문이다.  
+대상 코드베이스: `color-plan`(컬러플랜) · STEP 4 `PaletteScreen` · `PaletteRatioStackEditor` · `domain/role-assignment.ts` · `domain/ratio-calculation.ts` · `state/project-state.svelte.ts`.
 
 ---
 

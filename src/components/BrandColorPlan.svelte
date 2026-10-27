@@ -22,7 +22,7 @@
   const ROLES: RoleName[] = ['주조색', '보조색', '강조색']
 
   let {
-    stepBadge = 'STEP 2',
+    stepBadge = 'STEP 1 · 활동 2',
     heading = '색채계획하기',
     embedded = false,
     inset = false,

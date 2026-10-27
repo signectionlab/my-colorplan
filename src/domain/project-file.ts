@@ -1,4 +1,4 @@
-import type { Project } from '../types/project'
+import { isKnownProjectKind, PROJECT_KIND, type Project } from '../types/project'
 import { createDefaultProject } from './default-project'
 import { migrateApplyFieldFromLegacy, parseApplyFieldId } from './apply-field'
 import { normalizeHex } from './color-validation'
@@ -178,7 +178,7 @@ function parseV2(raw: UnknownRecord): Project {
   if (isRecord(raw.plan)) {
     base.plan = mergePlanFromRaw(raw.plan, base.plan)
   }
-  base.kind = 'my-brand-color-canvas'
+  base.kind = PROJECT_KIND
   base.version = 2
   normalizeLearnState(base.learn, base.brand.imagePicks)
   return base
@@ -192,7 +192,7 @@ export function validateProjectFile(data: unknown): ValidateResult {
   if (!isRecord(data)) {
     return { ok: false, error: 'JSON 객체가 아닙니다.' }
   }
-  if (data.kind !== 'my-brand-color-canvas') {
+  if (!isKnownProjectKind(data.kind)) {
     return { ok: false, error: '이 앱에서 저장한 파일이 아닙니다.' }
   }
   const version = data.version

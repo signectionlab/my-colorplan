@@ -1,3 +1,14 @@
+/** JSON·localStorage 프로젝트 식별자 (서비스명: 컬러플랜) */
+export const PROJECT_KIND = 'color-plan' as const
+/** 이전 서비스 식별자 — 불러오기 호환만 */
+export const LEGACY_PROJECT_KIND = 'my-brand-color-canvas' as const
+
+export function isKnownProjectKind(
+  kind: unknown,
+): kind is typeof PROJECT_KIND | typeof LEGACY_PROJECT_KIND {
+  return kind === PROJECT_KIND || kind === LEGACY_PROJECT_KIND
+}
+
 export const STEPS = ['brand', 'learn', 'compare', 'palette', 'review', 'plan'] as const
 
 export type StepId = (typeof STEPS)[number]
@@ -71,7 +82,7 @@ export type LearnBrandPickRecord = {
 }
 
 export type Project = {
-  kind: 'my-brand-color-canvas'
+  kind: typeof PROJECT_KIND
   version: 2
   screen: ScreenId
   brand: {
@@ -223,8 +234,8 @@ export const LEARN_FIT_REASON_HINTS = [
 export const STEP_META: { id: StepId; title: string; lede: string; nextLabel: string }[] = [
   {
     id: 'brand',
-    title: '내 브랜드',
-    lede: '이름과 원하는 이미지만 정해도 색 실습을 시작할 수 있어요. 색과 톤을 고른 이유는 나중에 적어도 됩니다.',
+    title: '어디에 사용할 색인가요?',
+    lede: '만들고 싶은 브랜드나 상품, 꾸미고 싶은 공강 등 색을 활용할 대상을 생각해보세요.',
     nextLabel: '내 색 이해하기',
   },
   {

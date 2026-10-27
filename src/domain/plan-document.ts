@@ -9,6 +9,7 @@ import {
   type Project,
   type StepId,
 } from '../types/project'
+import { APP_COPYRIGHT } from '../constants/copyright'
 import { applyFieldDisplayText } from './apply-field'
 import { brandImagePickKey } from './brand-image'
 import { learnRecordForKey } from './learn-normalize'
@@ -351,6 +352,7 @@ export function formatPlanMarkdown(project: Project): string {
     if (parts[parts.length - 1] !== '') parts.push('')
   }
   parts.push('적지 않은 항목은 추측하지 않고 ‘작성 필요’로 표시합니다. 직접 고친 문장은 색이 바뀌어도 자동으로 덮어쓰지 않습니다.')
+  parts.push('', '---', APP_COPYRIGHT)
   return parts.join('\n')
 }
 

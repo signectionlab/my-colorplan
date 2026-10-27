@@ -1,11 +1,9 @@
 <script lang="ts">
+  import AppCopyright from '../components/AppCopyright.svelte'
   import MeshHero from '../components/MeshHero.svelte'
   import { hasStoredProject } from '../services/project-storage'
-  import { downloadProjectJson } from '../services/project-export'
-  import { store, startFresh, continueWork, importText, goTo } from '../state/project-state.svelte'
+  import { startFresh, continueWork } from '../state/project-state.svelte'
 
-  let message = $state('')
-  let input: HTMLInputElement | undefined = $state()
   const saved = hasStoredProject()
 </script>
 
@@ -13,24 +11,12 @@
   <MeshHero />
   <div>
     <p class="eyebrow">색을 고르고, 비교하고, 계획으로 남기기</p>
-    <h1>마이 브랜드 컬러 캔버스</h1>
+    <h1>컬러플랜</h1>
     <p>브랜드에 어울리는 세 가지 색과 비율을 직접 정하고, 브랜드 컬러 계획서 초안까지 만들어 보세요.</p>
     <div class="actions">
       <button class="btn btn-primary" type="button" onclick={startFresh}>실습 시작하기</button>
       {#if saved}<button class="btn btn-secondary" type="button" onclick={continueWork}>이어서 하기</button>{/if}
     </div>
-    <div class="actions">
-      <button class="btn btn-ghost" type="button" onclick={() => input?.click()}>JSON 불러오기</button>
-      {#if saved}<button class="btn btn-ghost" type="button" onclick={() => downloadProjectJson(store.project)}>작업 파일 내려받기</button>{/if}
-    </div>
-    {#if message}<p role="alert">{message}</p>{/if}
-    <input bind:this={input} class="sr-only" type="file" accept="application/json,.json" onchange={async (e) => {
-      const file = e.currentTarget.files?.[0]
-      if (!file) return
-      message = importText(await file.text()) ?? ''
-      if (!message) goTo('brand')
-      e.currentTarget.value = ''
-    }} />
   </div>
 </section>
 
@@ -44,16 +30,25 @@
       width="1024"
       height="571"
     />
-    <p class="caption caption-guide guide-foot">작업은 이 브라우저에만 자동 저장됩니다. 다른 기기에서는 JSON 작업 파일로 이어가세요.</p>
+    <p class="caption caption-guide guide-foot">작업은 이 브라우저에 자동 저장됩니다.</p>
+    <AppCopyright />
   </div>
 </section>
 
 <style>
-  .hero { position: relative; min-height: 520px; display: grid; place-items: center; color: white; text-align: center; padding: 72px 20px; }
+  .hero {
+    position: relative;
+    min-height: min(420px, 72dvh);
+    display: grid;
+    place-items: center;
+    color: white;
+    text-align: center;
+    padding: 48px 20px 56px;
+  }
   .hero div { position: relative; max-width: 680px; }
-  .eyebrow { margin-bottom: 12px; }
-  h1 { margin-bottom: 16px; }
-  .actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .eyebrow { margin-bottom: 8px; }
+  h1 { margin-bottom: 12px; }
+  .actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   .hero :global(.btn-secondary), .hero :global(.btn-ghost) { color: white; border-color: rgba(255,255,255,.4); background: transparent; }
   .guide { background: var(--step-shell-bg, #f5f6f9); padding: 64px 20px 96px; }
   .guide img { display: block; width: min(100%, 960px); height: auto; margin: 24px auto 0; border-radius: 16px; }

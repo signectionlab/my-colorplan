@@ -15,7 +15,7 @@
 
 <header class="step-hero">
   <div class="step-hero-topline">
-    <span class="step-hero-eyebrow">MY BRAND COLOR</span>
+    <span class="step-hero-eyebrow">COLOR PLAN</span>
     <span class="step-hero-pill">{pillLabel}</span>
   </div>
   <div class="step-hero-progress" aria-hidden="true">

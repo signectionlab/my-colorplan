@@ -1,7 +1,9 @@
 {
-  "name": "my-brand-color-canvas",
+  "name": "color-plan",
   "private": true,
   "version": "0.1.0",
+  "author": "SINGECTION LAB",
+  "copyright": "© SINGECTION LAB 2026",
   "type": "module",
   "scripts": {
     "dev": "vite",
