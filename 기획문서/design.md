@@ -651,7 +651,8 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 
 ### 공통 실습 레이아웃
 
-- 단계 헤더: `WorkStepHeader` — STEP n/6, 단계 제목, `{typography.body-lg}` lede.
+- 단계 헤더: `WorkStepHeader` — STEP n/6, 단계 제목, lede(`src/types/project.ts` `STEP_META`).
+- 작업 화면 하단 고정 푸터: 「처음 / 이전 / 다음단계」 + `AppCopyright`(`© SINGECTION LAB 2026`). 시작 화면 가이드 섹션 하단에도 동일 저작권 캡션.
 - 주 행동: `{button-primary-pill}` 「다음단계」, 보조 `{button-secondary}` / `{button-ghost}`.
 - 카드: `{colors.canvas}` 배경, `{colors.hairline}` 테두리, `{rounded.lg}`(12px) — 활동 단위 구분.
 - 숫자·HEX: `{typography.body-tabular}` / `.tabular`, 대비 `{colors.ink-mute}`.
@@ -667,11 +668,12 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 
 **위계 (위 → 아래)**
 
-1. Lede — 핵심 질문(`screen-lede`).
-2. 브랜드 맥락 카드 — 브랜드명, 활용 분야(참고 이미지), **전달하고 싶은 방향**(`keywordReason`). 2단계에 `keywords` 목록 줄 없음.
-3. **pick-row** — 「1단계에서 고른 색」; 활동 1용 `focusPickKey` 선택.
-4. **활동 1** 카드 — `focusPick` 있을 때만. `.step-badge` + hero-card(형용사), 색 이름 표, 밝기/비슷한 톤 탭(`.learn-tools`).
-5. **활동 2** 카드 — 항상 표시. `.act2-color-nav`(이중 게이지 + 범례) → (가능 시) 톤 칩 → `compare-grid` 2열 → 인지 안내 → `act2-choice` 라디오 2개.
+1. `StepHero` lede — `STEP_META` learn 항목.
+2. 핵심 질문 — `screen-lede`(본문 첫 줄, 헤더 lede와 별도).
+3. **아이디어 맥락 카드** — 아이디어 이름(`brand.name`), 활용 분야(참고 이미지), **전달하고 싶은 방향**(`keywordReason`). 2단계에 `keywords` 목록 줄 없음.
+4. **pick-row** — 「1단계에서 고른 색」; 활동 1용 `focusPickKey` 선택.
+5. **활동 1** 카드 — `focusPick` 있을 때만. `.step-badge` + hero-card(형용사), 색 이름 표, 밝기/비슷한 톤 탭(`.learn-tools`).
+6. **활동 2** 카드 — 항상 표시. `.act2-color-nav`(이중 게이지 + 범례) → (가능 시) 톤 칩 → `compare-grid` 2열 → `act2-choice` 라디오 2개(별도 인지 안내 `<p>` 없음).
 
 **활동 2 · 이중 게이지 (`act2-dual-gauge-layout`)**
 
@@ -704,8 +706,8 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 
 **위계**
 
-1. Lede + `compare` / `palette` 분리 `caption`.
-2. **활동 1 · 가독성** — 큰 빌보드 → 배경 칩 / 글자 칩 + 웹 본문 기본색(`#333333`, `#ffffff`, 라벨 「기본」) → 대비 참고 문장. 나란히 비교·기준 저장은 `details` **나란히 비교 · 관찰 기록**(기본 펼침). 「브랜드 색 확정」 카피 금지. `readabilityChoice` UI 없음.
+1. `StepHero` lede(`STEP_META` compare) + `compare-note` 캡션(대비 안내·4단계 팔레트 분리). 본문 `screen-lede` 중복 없음.
+2. **활동 1 · 가독성** — 큰 빌보드 → 배경 칩 / 글자 칩 + 웹 본문 기본색(`#333333`, `#ffffff`, 라벨 「기본」) → 대비 참고 문장. 나란히 비교·기준 저장은 `details` **나란히 비교 · 관찰 기록**(기본 펼침); 안내는 `compare-baseline-help` `<span>`. 「브랜드 색 확정」·「팔레트 미확정」 lede 금지. `readabilityChoice` UI 없음.
 3. **활동 2 · 주변색 효과** — 제목 「주변 색에 따른 차이 관찰하기」. 도형·배경 A·배경 B 칩과 양쪽 패널(배경 A/B **동일 색 불가**). `surroundChoice` UI 없음.
 
 **스와치**
@@ -740,7 +742,7 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 
 **위계 (카드 3블록 + 푸터 네비)**
 
-1. **적용 결과 카드** — `step-badge` 「STEP 5 · 적용과 점검」, `activity-title` 「내 브랜드 컬러 적용 결과」, `PaletteBarSegments`(범례 **컬러칩** `legend-swatch`), `BrandMoodboardPanel`(`moodboard-panel` 70% · `moodboard-stage` · SVG host). SVG는 분야와 무관하게 `mokup-all.svg`.
+1. **적용 결과 카드** — `step-badge` 「STEP 5 · 적용과 점검」, `activity-title` 「아이디어에 적용한 컬러 결과」(현행 UI: 「내 브랜드 컬러…」— 후속), `PaletteBarSegments`(범례 **컬러칩** `legend-swatch`), `BrandMoodboardPanel`(`moodboard-panel` 70% · `moodboard-stage` · SVG host). SVG는 분야와 무관하게 `mokup-all.svg`.
 2. **활동 1 카드** — `step-badge` 「STEP 5 · 활동 1」, 1단계 색 strip, `choice-fieldset` / `choice-option`, follow-up `color-pick-grid`. 「다른 느낌」 등이면 4단계 이동 버튼.
 3. **활동 2 카드** — `usage-row`, `place-chip`(pill 토글), 활용 이유 라디오, optional `custom-reason` textarea. 주조 역할 퀴즈 카드는 없다.
 
@@ -761,14 +763,15 @@ CSS 그라데이션 대신 레이어를 겹친 SVG나 큰 배경 이미지로 �
 
 1. 도구 막대 — 복사 · Markdown · JSON · PDF로 저장(`window.print`).
 2. **01. 완성 전 점검** — 체크 3줄, 가이드 탭 3개, 결정 라디오(유지 / 4단계 / 5단계). `no-print`.
-3. **02. 계획서** — 팔레트 막대, 브랜드·분야, 1단계 색, 슬롯 선택 이유 입력, `BrandMoodboardPanel`(5단계와 같은 SVG).
+3. **02. 컬러 계획서** — 팔레트 막대, 아이디어·분야, 1단계 색, 슬롯 선택 이유 입력, `BrandMoodboardPanel`(5단계와 같은 SVG).
 4. **03. 계획서 완성하기** — 인쇄 버튼. `no-print`.
+5. 인쇄 전용 — 계획서 `<article>` 하단 `plan-print-only` + `AppCopyright`.
 
-인쇄 스타일은 점검·입력칸·완성 버튼을 숨기고 본문만 남긴다. 화면 역할은 `plan.md` §5.7.
+인쇄 스타일은 점검·입력칸·완성 버튼·앱 푸터 네비를 숨기고 본문·저작권만 남긴다. 화면 역할은 `plan.md` §5.7.
 
 ### design.md와 plan.md
 
-화면 역할·저장 필드는 `기획문서/plan.md` §5.3~§5.7을 따른다. 토큰·컴포넌트 이름은 본 문서의 `{colors.*}`, `{rounded.*}`, 버튼 변형을 우선한다.
+화면 역할·저장 필드는 `기획문서/plan.md` §5.3~§5.7을 따른다. 사용자-facing 용어는 plan.md **§1.4 용어 정책**(아이디어 · 컬러 계획서). 토큰·컴포넌트 이름은 본 문서의 `{colors.*}`, `{rounded.*}`, 버튼 변형을 우선한다.
 
 </design-context>
 

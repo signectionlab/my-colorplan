@@ -206,7 +206,7 @@ flowchart TD
 
 | 단계 | 사용 데이터 | UX / 저장 원칙 |
 |---|---|---|
-| STEP 1 내 브랜드 | 기본색명·색상칩·톤 | 현재 색상/톤 선택 흐름 유지 |
+| STEP 1 아이디어 정하기 | 기본색명·색상칩·톤 | 현재 색상/톤 선택 흐름 유지 |
 | STEP 2 활동 1 | 선택 색의 이미지 형용사, 기본색명, 확인된 형용색명 | 대표 형용사 1개를 hero 칩에 표시; HEX·밝기·비슷한 톤 유지 |
 | STEP 2 활동 2 | 동일 계열 톤·명도 비교, 이중 게이지, `mine`/`other` 선택(미선택 허용) | STEP 1 pick·HEX 자동 변경 없음; `compareToneId`·`imageCompareSide`만 기록 |
 | STEP 2 (레거시 UI) | fit·보조 탭 | `fitChoice`/`fitReason`·`unsure` compare는 저장·계획서만; LearnScreen 미편집 |

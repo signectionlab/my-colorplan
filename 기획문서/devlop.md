@@ -1,8 +1,10 @@
 # 컬러플랜 — 개발기획서 (기술 스택)
 
 - Copyright: © SINGECTION LAB 2026
-- 문서 버전: v0.5
+- 문서 버전: v0.7
 - 수정일: 2026년 10월 27일
+- v0.6: 배포(GitHub·Vercel) 확정, `STEP_META`·저작권·2·3단계 카피를 plan.md v2.10과 동기화
+- v0.7: plan.md v2.11 **아이디어**·**컬러 계획서** 용어 (`Project.brand` = 아이디어 맥락)
 - 서비스명: **컬러플랜** (JSON `kind`: `color-plan`, 이전 `my-brand-color-canvas` 불러오기 호환)
 - 변경 사항: 프런트엔드 프레임워크를 Svelte로 확정
 - 삭제 사항: 기존 문서의 ‘스텔스 개발’ 용어와 정의
@@ -35,7 +37,8 @@ Svelte를 사용해 **컬러플랜** 컬러 교육 웹앱을 개발한다.
 | 임시 저장 | localStorage | 구현 제안 |
 | 작업 백업 | JSON 내보내기·불러오기 | 구현 제안 |
 | 기획서 출력 | 텍스트 복사·Markdown 다운로드 | 구현 제안 |
-| 배포 | 정적 호스팅 | 방식 제안, 서비스 미정 |
+| 배포 | Vercel 정적 호스팅 (`vercel.json`, Vite `dist`) | **구현** — [my-colorplan.vercel.app](https://my-colorplan.vercel.app) |
+| 코드 저장소 | GitHub | **구현** — [signectionlab/my-colorplan](https://github.com/signectionlab/my-colorplan) |
 | 서비스 DB | 초기 미사용 | 확정 |
 | 회원가입·로그인 | 초기 미구현 | 확정 |
 | 결제 | 공모전 이후 검토 | 확정 |
@@ -57,18 +60,18 @@ Svelte를 사용해 **컬러플랜** 컬러 교육 웹앱을 개발한다.
 - 비율 조절 게이지
 - 색별 역할 표시
 - 팔레트 컬러 바
-- 브랜드 적용 미리보기
+- 아이디어 적용 미리보기(`BrandMoodboardPanel` 등)
 - 학습 점검 질문
 - 저장 상태 표시
 - 기획서 편집 영역
 
 ### 3.2 공통 상태
 
-브랜드 정보, 팔레트, 학습 기록, 계획 초안을 하나의 작업 상태(`Project`, `kind: 'color-plan'`, version 2)로 관리한다. 예전 JSON·localStorage(`my-brand-color-canvas`)는 불러온 뒤 `color-plan`으로 정규화한다.
+**아이디어 맥락**(`Project.brand`), 팔레트, 학습 기록, 계획 초안을 하나의 작업 상태(`Project`, `kind: 'color-plan'`, version 2)로 관리한다. 용어: [`plan.md`](plan.md) §1.4. 예전 JSON·localStorage(`my-brand-color-canvas`)는 불러온 뒤 `color-plan`으로 정규화한다.
 
 2단계 `learn` (요약):
 
-- `focusPickKey` — 활동 1에서 본 브랜드 색 (`hueId:toneId`)
+- `focusPickKey` — 활동 1에서 본 1단계 색 (`hueId:toneId`)
 - `brandPickRecords` (pick 키별) — `imageCompareSide`, `compareToneId`; 레거시 `fitChoice`, `fitReason`
 - `interestIds` / `reasons` — 「비교해 보고 싶은 색」(LearnScreen UI 없음, JSON·4단계 호환)
 
@@ -105,7 +108,7 @@ Svelte를 사용해 **컬러플랜** 컬러 교육 웹앱을 개발한다.
 
 화면마다 별도의 팔레트를 만들어 값이 서로 달라지지 않도록 한다.
 
-대비 실습용 `compare` 색은 브랜드 `palette`와 분리한다. JSON v2 import 시 `mergeCompareFromRaw`, `mergePaletteMetaFromRaw`로 구 필드 호환.
+대비 실습용 `compare` 색은 4단계 `palette`와 분리한다. JSON v2 import 시 `mergeCompareFromRaw`, `mergePaletteMetaFromRaw`로 구 필드 호환.
 
 ### 3.3 계산 로직 분리
 
@@ -141,7 +144,7 @@ Svelte 컴포넌트에서 localStorage를 직접 호출하지 않는다.
 6. 템플릿으로 컬러디자인 계획 초안을 작성한다.
 7. 사용자가 결과를 복사하거나 파일로 내려받는다.
 
-초기 버전에서는 학습자의 브랜드 정보와 작업 내용을 서버 DB에 전송하지 않는다.
+초기 버전에서는 학습자의 아이디어(`brand`)·작업 내용을 서버 DB에 전송하지 않는다.
 
 외부 AI 호출도 수행하지 않는다.
 
@@ -174,7 +177,7 @@ src/
 
   screens/
     StartScreen.svelte
-    BrandScreen.svelte
+    BrandScreen.svelte   # 1단계 · 아이디어 (StepId `brand`)
     LearnScreen.svelte
     CompareScreen.svelte
     PaletteScreen.svelte
@@ -196,8 +199,11 @@ src/
     project-state.svelte.ts
 
   types/
-    project.ts
+    project.ts          # Project 타입, STEP_META, 선택지 라벨
     content.ts
+
+  constants/
+    copyright.ts        # APP_COPYRIGHT
 
   domain/
     color-validation.ts
@@ -224,9 +230,8 @@ src/
   data/
     review-activities.ts
     brand-moodboard.ts
-    color-terms.json
-    color-images.json
-    learning-examples.json
+    compare-tone-education.ts   # COMPARE_TONE_IMAGE_HINTS 등 (활동 2 톤 참고)
+    colors.ts
     sources.json
 
   services/
@@ -268,5 +273,20 @@ Svelte 상태 관리 방식에 따라 상태 모듈의 확장자와 세부 구�
 - 화면과 UI는 .svelte 컴포넌트로 구성한다.
 - 계산·검증·저장·기획서 생성은 별도 모듈로 유지한다.
 - 기술 스택 결정 항목에서 프런트엔드 프레임워크 선택을 제외한다.
-- 패키지 버전과 배포 서비스는 개발 착수 시 결정한다.
+- 패키지 버전은 `package.json`·lockfile 기준으로 관리한다.
+- 배포는 Vercel + GitHub `main`(자동 배포는 Vercel Git 연동 후).
 - 기존 학습 흐름, 기능 범위, 배색 규칙의 미정 사항은 유지한다.
+
+---
+
+## 9. 배포·운영(현행)
+
+| 항목 | 값 |
+|---|---|
+| 저장소 | `https://github.com/signectionlab/my-colorplan` |
+| 프로덕션 URL | `https://my-colorplan.vercel.app` |
+| 빌드 | `npm run build` → `dist/` |
+| 로컬 | `npm run dev` / `npm run preview` |
+| 저작권 | `src/constants/copyright.ts`, `AppCopyright.svelte`, Markdown export 하단 |
+
+상세 카피·화면 역할은 `plan.md` §4.1·§5, UI 토큰은 `design.md`를 따른다.
